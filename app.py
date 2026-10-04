@@ -3,13 +3,14 @@ import urllib.parse
 import os
 
 # -------------------------------------------------------------
-# CONFIGURATION & LOCAL PATHS
+# CONFIGURATION & GITHUB RELATIVE PATHS
 # -------------------------------------------------------------
 WHATSAPP_NUMBER = "919716467561"
 
-KVC_PATH = r"C:\Users\mrsau\OneDrive\Desktop\kavya\KVC.png"
-QRC_PATH = r"C:\Users\mrsau\OneDrive\Desktop\kavya\QRC.jpeg"
-VC_PATH = r"C:\Users\mrsau\OneDrive\Desktop\kavya\visiting card.jpeg"
+# Updated to relative paths for GitHub/Streamlit Cloud Deployment
+KVC_PATH = "KVC.png"
+QRC_PATH = "QRC.jpeg"
+VC_PATH = "visiting card.jpeg"
 
 st.set_page_config(page_title="Kavya International | Premium Printing Solutions", page_icon="🖨️", layout="wide")
 
@@ -31,14 +32,12 @@ st.markdown("""
     /* Hide Sidebar completely */
     [data-testid="collapsedControl"], [data-testid="stSidebar"] { display: none !important; }
     
-    /* ---------------------------------------------------
-       RICH CREAM BACKGROUND (KHAJOORWALA STYLE)
-       --------------------------------------------------- */
+    /* RICH CREAM BACKGROUND */
     .stApp, .main, [data-testid="stAppViewContainer"], [data-testid="stHeader"], .block-container {
-        background-color: #FDF9F1 !important; /* Premium Cream Color */
+        background-color: #FDF9F1 !important;
     }
     
-    /* Rounded Symmetrical Buttons for Navigation & Cart */
+    /* Rounded Symmetrical Buttons */
     div[data-testid="stButton"] > button {
         border-radius: 30px !important;
         font-weight: 700 !important;
@@ -65,7 +64,7 @@ st.markdown("""
     .hero-subtitle {font-size: 1.1rem; font-weight: 400; color: #CBD5E1;}
     .section-title {font-size: 1.8rem; font-weight: 800; color: #0F172A; border-bottom: 3px solid #0284C7; padding-bottom: 10px; margin-bottom: 30px; margin-top: 20px;}
     
-    /* B2B Product Cards (White on Cream Background) */
+    /* B2B Product Cards */
     .b2b-card {
         background-color: #FFFFFF !important; 
         padding: 25px; border-radius: 12px; border: 1px solid #E2E8F0;
@@ -86,14 +85,12 @@ def add_to_cart(item_name, size, qty):
     st.toast(f"Added {qty}x {item_name} to Cart!", icon="🛒")
 
 # -------------------------------------------------------------
-# TOP HEADER (Small Lang Dropdown, Logo, Contact)
+# TOP HEADER 
 # -------------------------------------------------------------
 top_c1, top_c2, top_c3 = st.columns([1, 2, 1])
 
-# 1. SMALL LANGUAGE DROPDOWN IN TOP LEFT CORNER
 with top_c1:
     st.markdown("<p style='font-size:0.9rem; font-weight:700; color:#64748B; margin-bottom:0px;'>Language / भाषा</p>", unsafe_allow_html=True)
-    # Using selectbox keeps it very compact
     st.session_state.lang = st.selectbox(
         "", 
         ["English", "हिंदी"], 
@@ -101,7 +98,6 @@ with top_c1:
         label_visibility="collapsed"
     )
 
-# 2. CENTERED LOGO
 with top_c2:
     sub1, sub_logo, sub2 = st.columns([1, 2, 1])
     with sub_logo:
@@ -110,7 +106,6 @@ with top_c2:
         else:
             st.info("📷 Banner Image Missing")
 
-# 3. CONTACT INFO
 with top_c3:
     st.markdown("""
         <div class="top-bar-contact">
@@ -122,14 +117,13 @@ with top_c3:
 st.write("---")
 
 # -------------------------------------------------------------
-# MAIN NAVIGATION (NATIVE SYMMETRICAL BUTTONS)
+# MAIN NAVIGATION 
 # -------------------------------------------------------------
 nav_options = ["Home & Profile", "Premium Blankets", "Other Consumables", "Technical Hub", "Request a Quote", "Contact & Payment"]
 nav_options_hi = ["होम", "प्रीमियम ब्लैंकेट्स", "अन्य सामग्री", "तकनीकी सहायता", "कोटेशन प्राप्त करें", "संपर्क विवरण"]
 
 current_options = nav_options if st.session_state.lang == "English" else nav_options_hi
 
-# 6 Equal columns for navigation
 nav_cols = st.columns(6)
 for i, col in enumerate(nav_cols):
     with col:
@@ -164,12 +158,13 @@ if page == "Home & Profile":
     st.markdown('<div class="section-title">Authorized Partners</div>', unsafe_allow_html=True)
     logo_cols = st.columns(5)
     
+    # Updated to relative paths
     brand_logos = [
-        (r"C:\Users\mrsau\OneDrive\Desktop\kavya\kinyo.png", "KINYO"),
-        (r"C:\Users\mrsau\OneDrive\Desktop\kavya\trb.png", "TRELLEBORG"),
-        (r"C:\Users\mrsau\OneDrive\Desktop\kavya\flint.png", "VARN"),
-        (r"C:\Users\mrsau\OneDrive\Desktop\kavya\poly.png", "POLICROM"),
-        (r"C:\Users\mrsau\OneDrive\Desktop\kavya\conti.png", "CONTAIR")
+        ("kinyo.png", "KINYO"),
+        ("trb.png", "TRELLEBORG"),
+        ("flint.png", "VARN"),
+        ("poly.png", "POLICROM"),
+        ("conti.png", "CONTAIR")
     ]
     
     for i, (path, name) in enumerate(brand_logos):
@@ -207,10 +202,10 @@ elif page == "Premium Blankets":
     
     with col1:
         st.markdown('<div class="b2b-card">', unsafe_allow_html=True)
-        if os.path.exists(r"C:\Users\mrsau\OneDrive\Desktop\kavya\atlas.jpg"): st.image(r"C:\Users\mrsau\OneDrive\Desktop\kavya\atlas.jpg")
+        if os.path.exists("atlas.jpg"): st.image("atlas.jpg")
         st.markdown('<div class="card-title">Atlas Web AS</div>', unsafe_allow_html=True)
         st.write("**Application:** Web Offset, Newspaper\n\n**Thickness:** 1.95mm / 1.68mm")
-        if pdf_bytes := get_file_bytes(r"C:\Users\mrsau\OneDrive\Desktop\kavya\Atlas Web AS.pdf"):
+        if pdf_bytes := get_file_bytes("Atlas Web AS.pdf"):
             st.download_button("📄 Download Specs", data=pdf_bytes, file_name="Atlas_Web_AS.pdf", mime="application/pdf", key="dl_atlas")
         st.write("---")
         size = st.text_input("Cut Size", placeholder="e.g., 889x1194 mm", key="sz_atlas")
@@ -220,10 +215,10 @@ elif page == "Premium Blankets":
 
     with col2:
         st.markdown('<div class="b2b-card">', unsafe_allow_html=True)
-        if os.path.exists(r"C:\Users\mrsau\OneDrive\Desktop\kavya\ex6000.jpg"): st.image(r"C:\Users\mrsau\OneDrive\Desktop\kavya\ex6000.jpg")
+        if os.path.exists("ex6000.jpg"): st.image("ex6000.jpg")
         st.markdown('<div class="card-title">EX6000 (1.95mm)</div>', unsafe_allow_html=True)
         st.write("**Application:** Sheetfed Presses\n\n**Thickness:** 1.93-1.98mm")
-        if pdf_bytes := get_file_bytes(r"C:\Users\mrsau\OneDrive\Desktop\kavya\EX6000 1.95mm.pdf"):
+        if pdf_bytes := get_file_bytes("EX6000 1.95mm.pdf"):
             st.download_button("📄 Download Specs", data=pdf_bytes, file_name="EX6000_1.95mm.pdf", mime="application/pdf", key="dl_ex")
         st.write("---")
         size = st.text_input("Cut Size", placeholder="Machine Model", key="sz_ex")
@@ -233,10 +228,10 @@ elif page == "Premium Blankets":
 
     with col3:
         st.markdown('<div class="b2b-card">', unsafe_allow_html=True)
-        if os.path.exists(r"C:\Users\mrsau\OneDrive\Desktop\kavya\mc740.jpg"): st.image(r"C:\Users\mrsau\OneDrive\Desktop\kavya\mc740.jpg")
+        if os.path.exists("mc740.jpg"): st.image("mc740.jpg")
         st.markdown('<div class="card-title">MC740</div>', unsafe_allow_html=True)
         st.write("**Application:** Cardboard / Heavy Stock\n\n**Thickness:** 1.95mm")
-        if pdf_bytes := get_file_bytes(r"C:\Users\mrsau\OneDrive\Desktop\kavya\MC740.pdf"):
+        if pdf_bytes := get_file_bytes("MC740.pdf"):
             st.download_button("📄 Download Specs", data=pdf_bytes, file_name="MC740.pdf", mime="application/pdf", key="dl_mc")
         st.write("---")
         size = st.text_input("Cut Size", placeholder="mm", key="sz_mc")
@@ -270,14 +265,12 @@ elif page == "Technical Hub":
     col1, col2 = st.columns(2)
     with col1:
         with st.expander("🛠️ Troubleshooting: Blanket Smashing"): st.write("Utilize blankets with ThermaSphere layers (like Kinyo EX6000).")
-        with st.expander("🛠️ Troubleshooting: Ink Piling"): st.write("Check your dampening solution pH.")
+        with st.expander("🛠️️ Troubleshooting: Ink Piling"): st.write("Check your dampening solution pH.")
     with col2:
         with st.expander("📖 Best Practices: Underpacking"): st.write("Always use calibrated packing paper (like Policrom).")
 
 elif page == "Request a Quote":
     st.markdown('<div class="section-title">Your Cart & Quotation</div>', unsafe_allow_html=True)
-    
-    # KHAJOORWALA STYLE LOGIC: QR CODE IS STRICTLY HIDDEN UNLESS ITEMS ARE IN CART
     if not st.session_state.quote_cart:
         st.info("🛒 Your cart is empty. Please add products from the catalog to proceed.")
     else:
@@ -292,7 +285,6 @@ elif page == "Request a Quote":
                 st.session_state.quote_cart = []
                 st.rerun()
                 
-        # QR CODE APPEARS ONLY HERE
         with col_qr:
             st.markdown('<div class="trust-badge" style="text-align: center;">', unsafe_allow_html=True)
             st.markdown("<b style='font-size:1.2rem; color:#0F172A;'>Secure Payment</b><br><br>", unsafe_allow_html=True)
